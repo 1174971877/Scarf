@@ -60,7 +60,8 @@ public class MyWebView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ManagerUtils.addActivity(this);
         sp = getSp(this);
-        if (getCurrent(sp) == null) {
+        Intent startIntent = getIntent();
+        if ((startIntent.getStringExtra("add")!=null) || getCurrent(sp) == null) {
             setContentView(R.layout.activity_my_web_view);
             mWebView = (WebView) findViewById(R.id.webView);
             title_WebView = (TextView) findViewById(R.id.title);

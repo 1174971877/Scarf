@@ -250,6 +250,9 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
         if (getItemViewType(position) == TYPE_NORMAL) {
             if (holder instanceof ViewHolder) {
                 final Comment comment = commentList.get(position - 1);
+                if (comment.getUser() == null) {
+                    return;
+                }
                 User user = comment.getUser();
                 Glide.with(mContext).load(comment.getUser().getProfile_image_url()).into(holder.avatarImage);
 
@@ -301,8 +304,14 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                 }
                 holder.transmit_weibo_content.setText(StringUtils.transformWeiboBody(mContext, holder.body, comment.getStatus().getText()));
                 holder.transmit_weibo_title.setText(comment.getStatus().getUser().getScreen_name());
-                String replyCommentWithName = "@" + comment.getReply_comment().getUser().getScreen_name() + ":" + comment.getReply_comment().getText();
-                holder.transmit_comment.setText(StringUtils.transformWeiboBody(mContext, holder.body, replyCommentWithName));
+                if (comment.getReply_comment() != null){
+                    String replyCommentWithName = comment.getReply_comment().getText();
+                    if (comment.getReply_comment().getUser() != null) {
+                        replyCommentWithName = "@" + comment.getReply_comment().getUser().getScreen_name() + ":" + comment.getReply_comment().getText();
+                    }
+                    holder.transmit_comment.setText(StringUtils.transformWeiboBody(mContext, holder.body, replyCommentWithName));
+                }
+
                 return;
 
             }

@@ -72,6 +72,7 @@ public class UserManager extends BaseActivity implements View.OnClickListener{
                     Toast.makeText(this, "不允许存储超过三个用户", Toast.LENGTH_SHORT).show();
                 }else{
                     Intent intent = new Intent(UserManager.this,MyWebView.class);
+                    intent.putExtra("add","yes");
                     startActivity(intent);
                 }
                 break;
